@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тон-полутон</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎹 Тон-полутон</h1>
+        </header>
+        
+        <main>
+            <!-- Вертикальное расположение кнопок -->
+            <div class="vertical-controls">
+                <button id="tone-up-button" class="nav-button glass">
+                    <span class="button-text">+1 ↑</span>
+                </button>
+                
+                <button id="semitone-up-button" class="nav-button glass">
+                    <span class="button-text">+0.5 →</span>
+                </button>
+                
+                <button id="play-button" class="piano-button main">
+                    <span class="button-text" id="current-note-text">Нота</span>
+                </button>
+                
+                <button id="semitone-down-button" class="nav-button glass">
+                    <span class="button-text">← -0.5</span>
+                </button>
+                
+                <button id="tone-down-button" class="nav-button glass">
+                    <span class="button-text">↓ -1</span>
+                </button>
+                
+                <!-- Кнопка смены ноты -->
+                <button id="next-button" class="piano-button other-note">
+                    <span class="button-text">🎲 Другая нота</span>
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <footer class="app-footer">
+        <p>by Dima Skulanov, 2025</p>
+    </footer>
+
+    <script src="js/piano.js"></script>
+</body>
+</html>
