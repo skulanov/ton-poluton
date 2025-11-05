@@ -277,9 +277,9 @@ class PianoApp {
         }
         
         // Если текущая нота - Ре (D) и нужно идти сильно вниз
-        if (currentNoteEn === 'D' && offset === -2) {
-            return this.extraNotes['C4']; // -1 = До 3-й октавы (правильный звук!)
-        }
+        //if (currentNoteEn === 'D' && offset === -2) {
+        //    return this.extraNotes['C4']; // -1 = До 3-й октавы (правильный звук!)
+        //}
         
         // Если текущая нота - Си (B) и нужно идти вверх
         if (currentNoteEn === 'B' && offset > 0) {
