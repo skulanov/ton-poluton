@@ -286,6 +286,11 @@ class PianoApp {
             if (offset === 2) return this.extraNotes['Db5'];  // +1 = До# 5-й октавы
         }
         
+        // Если текущая нота - Ля# (A#), и нужен +2 (тон вверх), возвращаем До 5 октавы
+        if (currentNoteEn === 'A#' && offset === 2) {
+            return this.extraNotes['C5'];
+        }
+        
         // Обычная логика для остальных случаев
         const targetIndex = (this.currentNoteIndex + offset + this.notes.length) % this.notes.length;
         return this.notes[targetIndex];
