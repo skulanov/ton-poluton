@@ -20,7 +20,7 @@ class PianoApp {
         // Дополнительные ноты для корректной работы интервалов
         this.extraNotes = {
             // Ноты третьей октавы (ниже)
-            'C3': { name: 'До', nameEn: 'C3', file: 'audio/C3.wav' },
+            //'C3': { name: 'До', nameEn: 'C3', file: 'audio/C3.wav' },
             'Bb3': { name: 'Си♭', nameEn: 'Bb3', file: 'audio/Bb3.wav' },
             'B3': { name: 'Си', nameEn: 'B3', file: 'audio/B3.wav' },
             // Ноты пятой октавы (выше)
