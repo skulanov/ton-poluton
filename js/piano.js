@@ -2,19 +2,20 @@ class PianoApp {
     constructor() {
         // Ноты четвёртой октавы с цветовой схемой (плавный переход от красного до фиолетового)
         this.notes = [
-            { name: 'До', nameEn: 'C', file: 'audio/C4.wav', colors: { bg: '#ff4757, #ff3742', button: '#ff4757, #ff3742' } }, // Красный
-            { name: 'До#', nameEn: 'C#', file: 'audio/Db4.wav', colors: { bg: '#ff6b47, #ff5722', button: '#ff6b47, #ff5722' } }, // Красно-оранжевый
-            { name: 'Ре', nameEn: 'D', file: 'audio/D4.wav', colors: { bg: '#ff9f43, #ff8f00', button: '#ff9f43, #ff8f00' } }, // Оранжевый
-            { name: 'Ре#', nameEn: 'D#', file: 'audio/Eb4.wav', colors: { bg: '#feca57, #fbc02d', button: '#feca57, #fbc02d' } }, // Жёлто-оранжевый
-            { name: 'Ми', nameEn: 'E', file: 'audio/E4.wav', colors: { bg: '#f9ca24, #f0932b', button: '#f9ca24, #f0932b' } }, // Жёлтый
-            { name: 'Фа', nameEn: 'F', file: 'audio/F4.wav', colors: { bg: '#6c5ce7, #a29bfe', button: '#6c5ce7, #a29bfe' } }, // Зелёный
-            { name: 'Фа#', nameEn: 'F#', file: 'audio/Gb4.wav', colors: { bg: '#00b894, #00cec9', button: '#00b894, #00cec9' } }, // Зелёно-голубой
-            { name: 'Соль', nameEn: 'G', file: 'audio/G4.wav', colors: { bg: '#26de81, #20bf6b', button: '#26de81, #20bf6b' } }, // Сине-зелёный
-            { name: 'Соль#', nameEn: 'G#', file: 'audio/Ab4.wav', colors: { bg: '#45aaf2, #2d98da', button: '#45aaf2, #2d98da' } }, // Голубой
-            { name: 'Ля', nameEn: 'A', file: 'audio/A4.wav', colors: { bg: '#0984e3, #74b9ff', button: '#0984e3, #74b9ff' } }, // Синий
-            { name: 'Ля#', nameEn: 'A#', file: 'audio/Bb4.wav', colors: { bg: '#8854d0, #6c5ce7', button: '#8854d0, #6c5ce7' } }, // Сине-фиолетовый
-            { name: 'Си', nameEn: 'B', file: 'audio/B4.wav', colors: { bg: '#a55eea, #8e44ad', button: '#a55eea, #8e44ad' } } // Фиолетовый
+          { name: 'До',    nameEn: 'C',  file: 'audio/C4.wav',  colors: { bg: '#6C1A1A, #4C1111', button: '#6C1A1A, #4C1111' } }, // насыщенный бордо, благородный
+          { name: 'До#',   nameEn: 'C#', file: 'audio/Db4.wav', colors: { bg: '#8C2323, #5C1919', button: '#8C2323, #5C1919' } }, // бархатно-красный
+          { name: 'Ре',    nameEn: 'D',  file: 'audio/D4.wav',  colors: { bg: '#A43A2A, #78322A', button: '#A43A2A, #78322A' } }, // бархатно-терракотовый
+          { name: 'Ре#',   nameEn: 'D#', file: 'audio/Eb4.wav', colors: { bg: '#924747, #663636', button: '#924747, #663636' } }, // винно-карамельный
+          { name: 'Ми',    nameEn: 'E',  file: 'audio/E4.wav',  colors: { bg: '#755454, #584041', button: '#755454, #584041' } }, // шоколадно-винный
+          { name: 'Фа',    nameEn: 'F',  file: 'audio/F4.wav',  colors: { bg: '#3F2A4C, #30203A', button: '#3F2A4C, #30203A' } }, // винный с фиолетовым
+          { name: 'Фа#',   nameEn: 'F#', file: 'audio/Gb4.wav', colors: { bg: '#3F2347, #291B36', button: '#3F2347, #291B36' } }, // баклажановый
+          { name: 'Соль',  nameEn: 'G',  file: 'audio/G4.wav',  colors: { bg: '#352150, #271942', button: '#352150, #271942' } }, // насыщенно-фиолетовый, спокойный
+          { name: 'Соль#', nameEn: 'G#', file: 'audio/Ab4.wav', colors: { bg: '#462764, #2E2046', button: '#462764, #2E2046' } }, // глубокий сине-фиолетовый
+          { name: 'Ля',    nameEn: 'A',  file: 'audio/A4.wav',  colors: { bg: '#593684, #3C2559', button: '#593684, #3C2559' } }, // тёмный благородный фиолетовый
+          { name: 'Ля#',   nameEn: 'A#', file: 'audio/Bb4.wav', colors: { bg: '#7227AC, #452664', button: '#7227AC, #452664' } }, // аметистовый
+          { name: 'Си',    nameEn: 'B',  file: 'audio/B4.wav',  colors: { bg: '#921CAB, #56196E', button: '#921CAB, #56196E' } }  // тёмный лилово-фиолетовый, роскошь
         ];
+
 
         // Дополнительные ноты для корректной работы интервалов
         this.extraNotes = {
