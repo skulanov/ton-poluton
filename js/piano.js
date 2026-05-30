@@ -1,245 +1,201 @@
 class PianoApp {
     constructor() {
-        // Ноты четвёртой октавы с цветовой схемой (плавный переход от красного до фиолетового)
-        this.notes = [
-          { name: 'До',    nameEn: 'C',  file: 'audio/C4.mp3',  colors: { bg: '#6C1A1A, #4C1111', button: '#6C1A1A, #4C1111' } }, // насыщенный бордо, благородный
-          { name: 'До#',   nameEn: 'C#', file: 'audio/Db4.mp3', colors: { bg: '#8C2323, #5C1919', button: '#8C2323, #5C1919' } }, // бархатно-красный
-          { name: 'Ре',    nameEn: 'D',  file: 'audio/D4.mp3',  colors: { bg: '#A43A2A, #78322A', button: '#A43A2A, #78322A' } }, // бархатно-терракотовый
-          { name: 'Ре#',   nameEn: 'D#', file: 'audio/Eb4.mp3', colors: { bg: '#924747, #663636', button: '#924747, #663636' } }, // винно-карамельный
-          { name: 'Ми',    nameEn: 'E',  file: 'audio/E4.mp3',  colors: { bg: '#755454, #584041', button: '#755454, #584041' } }, // шоколадно-винный
-          { name: 'Фа',    nameEn: 'F',  file: 'audio/F4.mp3',  colors: { bg: '#3F2A4C, #30203A', button: '#3F2A4C, #30203A' } }, // винный с фиолетовым
-          { name: 'Фа#',   nameEn: 'F#', file: 'audio/Gb4.mp3', colors: { bg: '#3F2347, #291B36', button: '#3F2347, #291B36' } }, // баклажановый
-          { name: 'Соль',  nameEn: 'G',  file: 'audio/G4.mp3',  colors: { bg: '#352150, #271942', button: '#352150, #271942' } }, // насыщенно-фиолетовый, спокойный
-          { name: 'Соль#', nameEn: 'G#', file: 'audio/Ab4.mp3', colors: { bg: '#462764, #2E2046', button: '#462764, #2E2046' } }, // глубокий сине-фиолетовый
-          { name: 'Ля',    nameEn: 'A',  file: 'audio/A4.mp3',  colors: { bg: '#593684, #3C2559', button: '#593684, #3C2559' } }, // тёмный благородный фиолетовый
-          { name: 'Ля#',   nameEn: 'A#', file: 'audio/Bb4.mp3', colors: { bg: '#7227AC, #452664', button: '#7227AC, #452664' } }, // аметистовый
-          { name: 'Си',    nameEn: 'B',  file: 'audio/B4.mp3',  colors: { bg: '#921CAB, #56196E', button: '#921CAB, #56196E' } }  // тёмный лилово-фиолетовый, роскошь
+        // 12 хроматических позиций (C=0 ... B=11)
+        // Для диезов используются файлы с бемолями (C# → Db и т.д.)
+        this.CHROMATIC_NOTES = [
+            { name: 'До',    file: 'C',  colors: { bg: '#6C1A1A, #4C1111', button: '#6C1A1A, #4C1111' } },
+            { name: 'До#',   file: 'Db', colors: { bg: '#8C2323, #5C1919', button: '#8C2323, #5C1919' } },
+            { name: 'Ре',    file: 'D',  colors: { bg: '#A43A2A, #78322A', button: '#A43A2A, #78322A' } },
+            { name: 'Ре#',   file: 'Eb', colors: { bg: '#924747, #663636', button: '#924747, #663636' } },
+            { name: 'Ми',    file: 'E',  colors: { bg: '#755454, #584041', button: '#755454, #584041' } },
+            { name: 'Фа',    file: 'F',  colors: { bg: '#3F2A4C, #30203A', button: '#3F2A4C, #30203A' } },
+            { name: 'Фа#',   file: 'Gb', colors: { bg: '#3F2347, #291B36', button: '#3F2347, #291B36' } },
+            { name: 'Соль',  file: 'G',  colors: { bg: '#352150, #271942', button: '#352150, #271942' } },
+            { name: 'Соль#', file: 'Ab', colors: { bg: '#462764, #2E2046', button: '#462764, #2E2046' } },
+            { name: 'Ля',    file: 'A',  colors: { bg: '#593684, #3C2559', button: '#593684, #3C2559' } },
+            { name: 'Ля#',   file: 'Bb', colors: { bg: '#7227AC, #452664', button: '#7227AC, #452664' } },
+            { name: 'Си',    file: 'B',  colors: { bg: '#921CAB, #56196E', button: '#921CAB, #56196E' } },
         ];
 
+        // Диапазон доступных MP3-файлов: Db2 (MIDI 37) — G5 (MIDI 79)
+        this.MIDI_MIN = 37;
+        this.MIDI_MAX = 79;
 
-        // Дополнительные ноты для корректной работы интервалов
-        this.extraNotes = {
-            // Ноты третьей октавы (ниже)
-            //'C3': { name: 'До', nameEn: 'C3', file: 'audio/C3.mp3' },
-            'Bb3': { name: 'Си♭', nameEn: 'Bb3', file: 'audio/Bb3.mp3' },
-            'B3': { name: 'Си', nameEn: 'B3', file: 'audio/B3.mp3' },
-            // Ноты пятой октавы (выше)
-            'C5': { name: 'До', nameEn: 'C5', file: 'audio/C5.mp3' },
-            'Db5': { name: 'До#', nameEn: 'Db5', file: 'audio/Db5.mp3' }
+        // Опорные ноты: C4–B4 (MIDI 60–71)
+        this.REF_MIDI_MIN = 60;
+        this.REF_MIDI_MAX = 71;
+
+        this.MODES = {
+            'semitone': {
+                title:          'Тон-полутон',
+                smallInterval:  1,
+                largeInterval:  2,
+                largeUpLabel:   '+Б.2',
+                smallUpLabel:   '+М.2',
+                smallDownLabel: '-М.2',
+                largeDownLabel: '-Б.2',
+            },
+            'thirds': {
+                title:          'Терции',
+                smallInterval:  3,
+                largeInterval:  4,
+                largeUpLabel:   '+Б.3',
+                smallUpLabel:   '+М.3',
+                smallDownLabel: '-М.3',
+                largeDownLabel: '-Б.3',
+            },
+            'fourths': {
+                title:          'Кварта-квинта',
+                smallInterval:  5,
+                largeInterval:  7,
+                largeUpLabel:   '+Ч.5',
+                smallUpLabel:   '+Ч.4',
+                smallDownLabel: '-Ч.4',
+                largeDownLabel: '-Ч.5',
+            },
         };
 
-        // Текущая нота (остается неизменной до нажатия "Следующая нота")
-        this.currentNote = null;
-        this.currentNoteIndex = 0;
-        
-        // Текущий воспроизводящийся аудио объект
+        this.currentMode  = 'semitone';
+        this.currentMidi  = null;
         this.currentAudio = null;
-        
-        // DOM элементы
-        this.playButton = document.getElementById('play-button');
-        this.nextButton = document.getElementById('next-button');
-        this.currentNoteText = document.getElementById('current-note-text');
-        
-        // Навигационные кнопки
-        this.toneDownButton = document.getElementById('tone-down-button');
-        this.semitoneDownButton = document.getElementById('semitone-down-button');
-        this.semitoneUpButton = document.getElementById('semitone-up-button');
-        this.toneUpButton = document.getElementById('tone-up-button');
-        
-        // Аудио объекты для предзагрузки
         this.audioObjects = {};
-        
+
+        this.playButton         = document.getElementById('play-button');
+        this.nextButton         = document.getElementById('next-button');
+        this.currentNoteText    = document.getElementById('current-note-text');
+        this.titleEl            = document.getElementById('app-title');
+        this.toneUpButton       = document.getElementById('tone-up-button');
+        this.semitoneUpButton   = document.getElementById('semitone-up-button');
+        this.semitoneDownButton = document.getElementById('semitone-down-button');
+        this.toneDownButton     = document.getElementById('tone-down-button');
+
         this.init();
     }
 
+    // MIDI-номер → информация о ноте (null если вне диапазона)
+    getNoteInfo(midi) {
+        if (midi < this.MIDI_MIN || midi > this.MIDI_MAX) return null;
+        const position = midi % 12;
+        const octave   = Math.floor(midi / 12) - 1;
+        const note     = this.CHROMATIC_NOTES[position];
+        return {
+            name:   note.name,
+            key:    `${note.file}${octave}`,
+            file:   `audio/${note.file}${octave}.mp3`,
+            colors: note.colors,
+            midi,
+        };
+    }
+
     async init() {
-        // Предзагрузка всех аудиофайлов
         await this.preloadAudio();
-        
-        // Установка начальной случайной ноты
         this.selectRandomNote();
-        
-        // Обработчики событий
-        this.playButton.addEventListener('click', () => this.playCurrentNote());
-        this.nextButton.addEventListener('click', () => this.selectRandomNote());
-        
-        // Обработчики для навигационных кнопок (воспроизводят относительные ноты)
-        this.toneDownButton.addEventListener('click', () => this.playRelativeNote(-2));
-        this.semitoneDownButton.addEventListener('click', () => this.playRelativeNote(-1));
-        this.semitoneUpButton.addEventListener('click', () => this.playRelativeNote(1));
-        this.toneUpButton.addEventListener('click', () => this.playRelativeNote(2));
-        
-        // Поддержка клавиатуры
-        document.addEventListener('keydown', (event) => {
-            switch(event.code) {
-                case 'Space':
-                    event.preventDefault();
-                    this.playCurrentNote();
-                    break;
-                case 'ArrowRight':
-                    event.preventDefault();
-                    this.selectRandomNote();
-                    break;
-                case 'ArrowLeft':
-                    event.preventDefault();
-                    this.playRelativeNote(-1);
-                    break;
-                case 'ArrowUp':
-                    event.preventDefault();
-                    this.playRelativeNote(1);
-                    break;
-                case 'ArrowDown':
-                    event.preventDefault();
-                    this.playRelativeNote(-2);
-                    break;
-                case 'KeyQ':
-                    event.preventDefault();
-                    this.playRelativeNote(-2);
-                    break;
-                case 'KeyE':
-                    event.preventDefault();
-                    this.playRelativeNote(2);
-                    break;
+        this.updateModeUI();
+
+        this.playButton.addEventListener('click',         () => this.playCurrentNote());
+        this.nextButton.addEventListener('click',         () => this.selectRandomNote());
+        this.toneUpButton.addEventListener('click',       () => this.playInterval(true,  true));
+        this.semitoneUpButton.addEventListener('click',   () => this.playInterval(true,  false));
+        this.semitoneDownButton.addEventListener('click', () => this.playInterval(false, false));
+        this.toneDownButton.addEventListener('click',     () => this.playInterval(false, true));
+
+        document.getElementById('mode-btn-semitone').addEventListener('click', () => this.switchMode('semitone'));
+        document.getElementById('mode-btn-thirds').addEventListener('click',   () => this.switchMode('thirds'));
+        document.getElementById('mode-btn-fourths').addEventListener('click',  () => this.switchMode('fourths'));
+
+        document.addEventListener('keydown', (e) => {
+            switch (e.code) {
+                case 'Space':      e.preventDefault(); this.playCurrentNote();        break;
+                case 'ArrowRight': e.preventDefault(); this.selectRandomNote();       break;
+                case 'ArrowLeft':  e.preventDefault(); this.playInterval(false, false); break;
+                case 'ArrowUp':    e.preventDefault(); this.playInterval(true,  false); break;
+                case 'ArrowDown':  e.preventDefault(); this.playInterval(false, true);  break;
+                case 'KeyQ':       e.preventDefault(); this.playInterval(false, true);  break;
+                case 'KeyE':       e.preventDefault(); this.playInterval(true,  true);  break;
             }
         });
-
-        console.log('Piano App initialized with new logic!');
     }
 
     async preloadAudio() {
-        console.log('Предзагрузка аудиофайлов...');
-        
-        // Объединяем основные ноты и дополнительные
-        const allNotes = [...this.notes, ...Object.values(this.extraNotes)];
-        
-        const loadPromises = allNotes.map(note => {
-            return new Promise((resolve) => {
+        const promises = [];
+        for (let midi = this.MIDI_MIN; midi <= this.MIDI_MAX; midi++) {
+            const info = this.getNoteInfo(midi);
+            if (!info) continue;
+            promises.push(new Promise((resolve) => {
                 const audio = new Audio();
                 audio.preload = 'auto';
-                audio.volume = 0.8;
-                
+                audio.volume  = 0.8;
                 audio.addEventListener('canplaythrough', () => {
-                    this.audioObjects[note.nameEn] = audio;
-                    console.log(`Загружен: ${note.name} (${note.nameEn})`);
+                    this.audioObjects[info.key] = audio;
                     resolve();
-                });
-                
-                audio.addEventListener('error', (e) => {
-                    console.error(`Ошибка загрузки ${note.name}:`, e);
-                    this.audioObjects[note.nameEn] = null;
+                }, { once: true });
+                audio.addEventListener('error', () => {
+                    console.warn(`Не загружен: ${info.file}`);
+                    this.audioObjects[info.key] = null;
                     resolve();
-                });
-                
-                audio.src = note.file;
-            });
-        });
-        
-        await Promise.all(loadPromises);
-        console.log('Все аудиофайлы загружены!');
+                }, { once: true });
+                audio.src = info.file;
+            }));
+        }
+        await Promise.all(promises);
     }
 
-    // Выбор новой случайной ноты (единственный способ изменить currentNote)
     selectRandomNote() {
-        // Остановка текущего воспроизведения
         this.stopCurrentAudio();
-        
-        // Генерация нового случайного индекса (отличного от текущего)
-        let newIndex;
+        let newMidi;
         do {
-            newIndex = Math.floor(Math.random() * this.notes.length);
-        } while (newIndex === this.currentNoteIndex && this.notes.length > 1);
-        
-        this.currentNoteIndex = newIndex;
-        this.currentNote = this.notes[this.currentNoteIndex];
-        
-        // Обновление названия кнопки
-        this.updateCurrentNoteButton();
-        
-        console.log(`Выбрана новая текущая нота: ${this.currentNote.name} (${this.currentNote.nameEn})`);
-    }
-
-    // Обновление названия главной кнопки и цветовой схемы
-    updateCurrentNoteButton() {
-        if (this.currentNote) {
-            this.currentNoteText.textContent = `♪ ${this.currentNote.name} ♪`;
-            this.updateColorScheme();
+            newMidi = this.REF_MIDI_MIN + Math.floor(Math.random() * 12);
+        } while (newMidi === this.currentMidi);
+        this.currentMidi = newMidi;
+        const info = this.getNoteInfo(this.currentMidi);
+        if (info) {
+            this.currentNoteText.textContent = `♪ ${info.name} ♪`;
+            this.updateColorScheme(info.colors);
         }
     }
 
-    // Обновление цветовой схемы в зависимости от текущей ноты
-    updateColorScheme() {
-        if (!this.currentNote || !this.currentNote.colors) return;
-
-        const colors = this.currentNote.colors;
-        
-        // Обновление градиента фона
+    updateColorScheme(colors) {
         document.body.style.background = `linear-gradient(135deg, ${colors.bg})`;
-        
-        // Обновление цвета кнопки "Другая нота"
-        const nextButton = document.getElementById('next-button');
-        if (nextButton) {
-            nextButton.style.background = `linear-gradient(135deg, ${colors.button})`;
-            
-            // Обновление цвета тени для соответствия
-            const shadowColor = colors.button.split(',')[0].replace('#', '').replace(' ', '');
-            const r = parseInt(shadowColor.substr(0, 2), 16);
-            const g = parseInt(shadowColor.substr(2, 2), 16);
-            const b = parseInt(shadowColor.substr(4, 2), 16);
-            nextButton.style.boxShadow = `0 8px 25px rgba(${r}, ${g}, ${b}, 0.4)`;
+        const nextBtn = document.getElementById('next-button');
+        if (nextBtn) {
+            nextBtn.style.background = `linear-gradient(135deg, ${colors.button})`;
+            const hex = colors.button.split(',')[0].replace('#', '').trim();
+            const r = parseInt(hex.substr(0, 2), 16);
+            const g = parseInt(hex.substr(2, 2), 16);
+            const b = parseInt(hex.substr(4, 2), 16);
+            nextBtn.style.boxShadow = `0 8px 25px rgba(${r}, ${g}, ${b}, 0.4)`;
         }
-        
-        console.log(`Цветовая схема обновлена для ноты: ${this.currentNote.name}`);
     }
 
-    // Воспроизведение текущей ноты
-    async playCurrentNote() {
-        if (!this.currentNote) return;
-        await this.playNote(this.currentNote);
+    playCurrentNote() {
+        if (this.currentMidi === null) return;
+        const info = this.getNoteInfo(this.currentMidi);
+        if (info) this.playNote(info);
     }
 
-    // Воспроизведение ноты относительно текущей (не меняет currentNote)
-    async playRelativeNote(offset) {
-        if (!this.currentNote) return;
-        
-        const relativeNote = this.getNoteByOffset(offset);
-        if (!relativeNote) {
-            console.warn(`Не удалось найти ноту с отступом ${offset}`);
-            return;
+    playInterval(up, large) {
+        if (this.currentMidi === null) return;
+        const mode      = this.MODES[this.currentMode];
+        const semitones = large ? mode.largeInterval : mode.smallInterval;
+        const targetMidi = this.currentMidi + (up ? semitones : -semitones);
+        const info = this.getNoteInfo(targetMidi);
+        if (info) {
+            this.playNote(info);
+        } else {
+            console.warn(`Нота вне диапазона: MIDI ${targetMidi}`);
         }
-        
-        console.log(`Воспроизведение относительной ноты: ${relativeNote.name} (${relativeNote.nameEn}) [${offset > 0 ? '+' : ''}${offset}]`);
-        await this.playNote(relativeNote);
     }
 
-    // Универсальный метод воспроизведения ноты
-    async playNote(note) {
-        // Остановка предыдущего аудио
+    async playNote(info) {
         this.stopCurrentAudio();
-        
-        try {
-            const audio = this.audioObjects[note.nameEn];
-            
-            if (audio) {
-                // Сброс позиции
-                audio.currentTime = 0;
-                
-                // Сохранение ссылки на текущее аудио
-                this.currentAudio = audio;
-                
-                // Воспроизведение
-                await audio.play();
-                
-                console.log(`Воспроизводится: ${note.name} (${note.nameEn})`);
-            } else {
-                console.warn(`Аудио для ноты ${note.name} не доступно`);
-            }
-            
-        } catch (error) {
-            console.error('Ошибка воспроизведения:', error);
+        const audio = this.audioObjects[info.key];
+        if (audio) {
+            audio.currentTime = 0;
+            this.currentAudio = audio;
+            try { await audio.play(); } catch (e) { console.error('Ошибка воспроизведения:', e); }
         }
     }
 
-    // Остановка текущего воспроизведения
     stopCurrentAudio() {
         if (this.currentAudio) {
             this.currentAudio.pause();
@@ -248,72 +204,29 @@ class PianoApp {
         }
     }
 
-    // Метод для получения информации о текущей ноте
-    getCurrentNoteInfo() {
-        return this.currentNote ? {
-            name: this.currentNote.name,
-            nameEn: this.currentNote.nameEn,
-            file: this.currentNote.file,
-            index: this.currentNoteIndex
-        } : null;
+    switchMode(modeName) {
+        this.currentMode = modeName;
+        this.updateModeUI();
     }
 
-    // Метод для получения ноты по смещению с учётом октав
-    getNoteByOffset(offset) {
-        if (!this.currentNote) return null;
-        
-        // Особые случаи для граничных нот
-        const currentNoteEn = this.currentNote.nameEn;
-        
-        // Если текущая нота - До (C) и нужно идти вниз
-        if (currentNoteEn === 'C' && offset < 0) {
-            if (offset === -1) return this.extraNotes['B3'];  // -0.5 = Си 3-й октавы
-            if (offset === -2) return this.extraNotes['Bb3']; // -1 = Си♭ 3-й октавы
-        }
-        
-        // Если текущая нота - До# (C#) и нужно идти сильно вниз  
-        if (currentNoteEn === 'C#' && offset === -2) {
-            return this.extraNotes['B3']; // -1 = Си 3-й октавы
-        }
-        
-        // Если текущая нота - Ре (D) и нужно идти сильно вниз
-        //if (currentNoteEn === 'D' && offset === -2) {
-        //    return this.extraNotes['C4']; // -1 = До 3-й октавы (правильный звук!)
-        //}
-        
-        // Если текущая нота - Си (B) и нужно идти вверх
-        if (currentNoteEn === 'B' && offset > 0) {
-            if (offset === 1) return this.extraNotes['C5'];   // +0.5 = До 5-й октавы
-            if (offset === 2) return this.extraNotes['Db5'];  // +1 = До# 5-й октавы
-        }
-        
-        // Если текущая нота - Си бемоль (A#), и нужен +2 (тон вверх), возвращаем До 5 октавы
-        if (currentNoteEn === 'A#' && offset === 2) {
-            return this.extraNotes['C5'];
-        }
-        
-        // Обычная логика для остальных случаев
-        const targetIndex = (this.currentNoteIndex + offset + this.notes.length) % this.notes.length;
-        return this.notes[targetIndex];
+    updateModeUI() {
+        const mode = this.MODES[this.currentMode];
+
+        this.titleEl.textContent = `🎹 ${mode.title}`;
+
+        this.toneUpButton.querySelector('.button-text').textContent       = mode.largeUpLabel;
+        this.semitoneUpButton.querySelector('.button-text').textContent   = mode.smallUpLabel;
+        this.semitoneDownButton.querySelector('.button-text').textContent = mode.smallDownLabel;
+        this.toneDownButton.querySelector('.button-text').textContent     = mode.largeDownLabel;
+
+        // Показываем только кнопки неактивных режимов
+        Object.keys(this.MODES).forEach(key => {
+            const btn = document.getElementById(`mode-btn-${key}`);
+            if (btn) btn.style.display = key === this.currentMode ? 'none' : '';
+        });
     }
 }
 
-// Инициализация приложения при загрузке DOM
 document.addEventListener('DOMContentLoaded', () => {
     window.pianoApp = new PianoApp();
 });
-
-// Информация для разработчика
-console.log('🎹 Тон-полутон - Обновленная версия');
-console.log('Новая логика:');
-console.log('  • Текущая нота фиксируется только при нажатии "Следующая нота"');
-console.log('  • Кнопки "-1", "-0.5", "+0.5", "+1" воспроизводят относительные ноты');
-console.log('  • Главная кнопка показывает название текущей ноты');
-console.log('  • Воспроизведение можно прерывать новыми нажатиями');
-console.log('Управление:');
-console.log('  • Белая кнопка или пробел - воспроизвести текущую ноту');
-console.log('  • "Следующая нота" или стрелка вправо - выбрать новую случайную ноту');
-console.log('  • "-1" - воспроизвести ноту на тон ниже');
-console.log('  • "-0.5" или стрелка влево - воспроизвести ноту на полутон ниже');
-console.log('  • "+0.5" или стрелка вверх - воспроизвести ноту на полутон выше');
-console.log('  • "+1" - воспроизвести ноту на тон выше');

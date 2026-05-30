@@ -255,6 +255,44 @@ header p {
     pointer-events: none;
 }
 
+/* Переключатель режимов */
+.mode-switcher {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 0.5rem;
+    width: 100%;
+    max-width: 310px;
+}
+
+.mode-button {
+    flex: 1;
+    padding: 0.7rem 0.5rem;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    font-family: inherit;
+    letter-spacing: 0.02em;
+}
+
+.mode-button:hover {
+    background: rgba(255, 255, 255, 0.22);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: white;
+    transform: translateY(-1px);
+}
+
+.mode-button:active {
+    transform: translateY(0);
+}
+
 /* Футер */
 .app-footer {
     position: fixed;
