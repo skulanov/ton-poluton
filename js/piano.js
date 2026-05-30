@@ -2,30 +2,30 @@ class PianoApp {
     constructor() {
         // Ноты четвёртой октавы с цветовой схемой (плавный переход от красного до фиолетового)
         this.notes = [
-          { name: 'До',    nameEn: 'C',  file: 'audio/C4.wav',  colors: { bg: '#6C1A1A, #4C1111', button: '#6C1A1A, #4C1111' } }, // насыщенный бордо, благородный
-          { name: 'До#',   nameEn: 'C#', file: 'audio/Db4.wav', colors: { bg: '#8C2323, #5C1919', button: '#8C2323, #5C1919' } }, // бархатно-красный
-          { name: 'Ре',    nameEn: 'D',  file: 'audio/D4.wav',  colors: { bg: '#A43A2A, #78322A', button: '#A43A2A, #78322A' } }, // бархатно-терракотовый
-          { name: 'Ре#',   nameEn: 'D#', file: 'audio/Eb4.wav', colors: { bg: '#924747, #663636', button: '#924747, #663636' } }, // винно-карамельный
-          { name: 'Ми',    nameEn: 'E',  file: 'audio/E4.wav',  colors: { bg: '#755454, #584041', button: '#755454, #584041' } }, // шоколадно-винный
-          { name: 'Фа',    nameEn: 'F',  file: 'audio/F4.wav',  colors: { bg: '#3F2A4C, #30203A', button: '#3F2A4C, #30203A' } }, // винный с фиолетовым
-          { name: 'Фа#',   nameEn: 'F#', file: 'audio/Gb4.wav', colors: { bg: '#3F2347, #291B36', button: '#3F2347, #291B36' } }, // баклажановый
-          { name: 'Соль',  nameEn: 'G',  file: 'audio/G4.wav',  colors: { bg: '#352150, #271942', button: '#352150, #271942' } }, // насыщенно-фиолетовый, спокойный
-          { name: 'Соль#', nameEn: 'G#', file: 'audio/Ab4.wav', colors: { bg: '#462764, #2E2046', button: '#462764, #2E2046' } }, // глубокий сине-фиолетовый
-          { name: 'Ля',    nameEn: 'A',  file: 'audio/A4.wav',  colors: { bg: '#593684, #3C2559', button: '#593684, #3C2559' } }, // тёмный благородный фиолетовый
-          { name: 'Ля#',   nameEn: 'A#', file: 'audio/Bb4.wav', colors: { bg: '#7227AC, #452664', button: '#7227AC, #452664' } }, // аметистовый
-          { name: 'Си',    nameEn: 'B',  file: 'audio/B4.wav',  colors: { bg: '#921CAB, #56196E', button: '#921CAB, #56196E' } }  // тёмный лилово-фиолетовый, роскошь
+          { name: 'До',    nameEn: 'C',  file: 'audio/C4.mp3',  colors: { bg: '#6C1A1A, #4C1111', button: '#6C1A1A, #4C1111' } }, // насыщенный бордо, благородный
+          { name: 'До#',   nameEn: 'C#', file: 'audio/Db4.mp3', colors: { bg: '#8C2323, #5C1919', button: '#8C2323, #5C1919' } }, // бархатно-красный
+          { name: 'Ре',    nameEn: 'D',  file: 'audio/D4.mp3',  colors: { bg: '#A43A2A, #78322A', button: '#A43A2A, #78322A' } }, // бархатно-терракотовый
+          { name: 'Ре#',   nameEn: 'D#', file: 'audio/Eb4.mp3', colors: { bg: '#924747, #663636', button: '#924747, #663636' } }, // винно-карамельный
+          { name: 'Ми',    nameEn: 'E',  file: 'audio/E4.mp3',  colors: { bg: '#755454, #584041', button: '#755454, #584041' } }, // шоколадно-винный
+          { name: 'Фа',    nameEn: 'F',  file: 'audio/F4.mp3',  colors: { bg: '#3F2A4C, #30203A', button: '#3F2A4C, #30203A' } }, // винный с фиолетовым
+          { name: 'Фа#',   nameEn: 'F#', file: 'audio/Gb4.mp3', colors: { bg: '#3F2347, #291B36', button: '#3F2347, #291B36' } }, // баклажановый
+          { name: 'Соль',  nameEn: 'G',  file: 'audio/G4.mp3',  colors: { bg: '#352150, #271942', button: '#352150, #271942' } }, // насыщенно-фиолетовый, спокойный
+          { name: 'Соль#', nameEn: 'G#', file: 'audio/Ab4.mp3', colors: { bg: '#462764, #2E2046', button: '#462764, #2E2046' } }, // глубокий сине-фиолетовый
+          { name: 'Ля',    nameEn: 'A',  file: 'audio/A4.mp3',  colors: { bg: '#593684, #3C2559', button: '#593684, #3C2559' } }, // тёмный благородный фиолетовый
+          { name: 'Ля#',   nameEn: 'A#', file: 'audio/Bb4.mp3', colors: { bg: '#7227AC, #452664', button: '#7227AC, #452664' } }, // аметистовый
+          { name: 'Си',    nameEn: 'B',  file: 'audio/B4.mp3',  colors: { bg: '#921CAB, #56196E', button: '#921CAB, #56196E' } }  // тёмный лилово-фиолетовый, роскошь
         ];
 
 
         // Дополнительные ноты для корректной работы интервалов
         this.extraNotes = {
             // Ноты третьей октавы (ниже)
-            //'C3': { name: 'До', nameEn: 'C3', file: 'audio/C3.wav' },
-            'Bb3': { name: 'Си♭', nameEn: 'Bb3', file: 'audio/Bb3.wav' },
-            'B3': { name: 'Си', nameEn: 'B3', file: 'audio/B3.wav' },
+            //'C3': { name: 'До', nameEn: 'C3', file: 'audio/C3.mp3' },
+            'Bb3': { name: 'Си♭', nameEn: 'Bb3', file: 'audio/Bb3.mp3' },
+            'B3': { name: 'Си', nameEn: 'B3', file: 'audio/B3.mp3' },
             // Ноты пятой октавы (выше)
-            'C5': { name: 'До', nameEn: 'C5', file: 'audio/C5.wav' },
-            'Db5': { name: 'До#', nameEn: 'Db5', file: 'audio/Db5.wav' }
+            'C5': { name: 'До', nameEn: 'C5', file: 'audio/C5.mp3' },
+            'Db5': { name: 'До#', nameEn: 'Db5', file: 'audio/Db5.mp3' }
         };
 
         // Текущая нота (остается неизменной до нажатия "Следующая нота")
