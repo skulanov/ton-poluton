@@ -88,7 +88,7 @@ class PianoApp {
     }
 
     async init() {
-        await this.preloadAudio();
+        // UI инициализируется немедленно, не дожидаясь загрузки аудио
         this.selectRandomNote();
         this.updateModeUI();
 
@@ -105,8 +105,8 @@ class PianoApp {
 
         document.addEventListener('keydown', (e) => {
             switch (e.code) {
-                case 'Space':      e.preventDefault(); this.playCurrentNote();        break;
-                case 'ArrowRight': e.preventDefault(); this.selectRandomNote();       break;
+                case 'Space':      e.preventDefault(); this.playCurrentNote();          break;
+                case 'ArrowRight': e.preventDefault(); this.selectRandomNote();         break;
                 case 'ArrowLeft':  e.preventDefault(); this.playInterval(false, false); break;
                 case 'ArrowUp':    e.preventDefault(); this.playInterval(true,  false); break;
                 case 'ArrowDown':  e.preventDefault(); this.playInterval(false, true);  break;
@@ -114,6 +114,9 @@ class PianoApp {
                 case 'KeyE':       e.preventDefault(); this.playInterval(true,  true);  break;
             }
         });
+
+        // Аудио грузится в фоне
+        await this.preloadAudio();
     }
 
     async preloadAudio() {
